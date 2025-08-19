@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MMS — ساعات، محافظ، برفانات</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .card img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        footer a {
+            cursor: pointer;
+        }
+
+        /* خلي الحركة خطية في السطرين عشان تبقى ماركيه مستمرة */
+        .mySwiper .swiper-wrapper,
+        .mySwiper2 .swiper-wrapper {
+            transition-timing-function: linear !important;
+        }
+
+        :root {
+            --baby-blue: #b3e5fc;
+            --baby-blue-deep: #81d4fa;
+            --ink: #0d47a1;
+            --ink-2: #01579b;
+            --card-radius: 18px;
+        }
+
+        /* ====== NAVBAR ====== */
+        .navbar {
+            background: transparent !important;
+            /* شفاف فوق الهيرو */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            box-shadow: none !important;
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+        }
+
+        .navbar .nav-link {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff !important;
+            transition: opacity .25s ease;
+            letter-spacing: .3px;
+        }
+
+        .navbar .nav-link:hover {
+            opacity: .85;
+        }
+
+        .navbar-brand img {
+            height: 90px;
+            /* أصغر عشان ما يغطيش */
+            mix-blend-mode: multiply;
+            /* لو عليه خلفية بيضا تندمج */
+        }
+
+        /* زرار التوجل أبيض */
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, .6);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1) grayscale(1);
+        }
+
+        /* ====== HERO ====== */
+        header.hero {
+            position: relative;
+            min-height: 60vh;
+            /* أصغر من 100vh عشان المحتوى يبان */
+            display: flex;
+            align-items: center;
+        }
+
+        /* Overlay يحافظ على تباين النص */
+        header.hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, .35), rgba(0, 0, 0, .15) 40%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            color: #fff;
+            padding-top: 90px;
+            /* يبعد عن اللوجو */
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(179, 229, 252, .9);
+            color: #0d47a1;
+            padding: .35rem .7rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: .9rem;
+        }
+
+        .hero h1 {
+            font-weight: 900;
+            line-height: 1.2;
+            margin: .6rem 0 1rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, .35);
+        }
+
+        .hero .cta {
+            background: #fff;
+            color: #0d47a1;
+            border: none;
+            padding: .75rem 1.25rem;
+            border-radius: 999px;
+            font-weight: 800;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .hero .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+        }
+
+        .logo-main {
+            height: 250px;
+            /* تحكم في الطول */
+            width: auto;
+            /* يحافظ على نسبة الطول للعرض */
+            /* خيارات إضافية لو تحب */
+            margin-top: 5px;
+            /* مسافة من فوق */
+        }
+
+        .logo-main {
+            height: 220px !important;
+            /* !important يجبر المتصفح يستخدمها */
+            width: auto;
+
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* ====== HERO ====== */
+        .hero {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* يغطي الشاشة بدون تكبير زائد */
+            z-index: 1;
+        }
+
+
+
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            /* خلي Overlay أغمق شوي عشان الكلام يبان */
+            z-index: 1;
+        }
+
+        /* ====== NAVBAR ====== */
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 3;
+            background: transparent !important;
+            padding-top: .75rem;
+            padding-bottom: .75rem;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+        }
+
+        .navbar .nav-link {
+            color: #fff !important;
+            /* نص أبيض */
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .logo-main {
+            height: 120px;
+            width: auto;
+        }
+
+        /* ====== HERO CONTENT ====== */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff !important;
+            /* نص أبيض */
+            padding-top: 100px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(179, 229, 252, .8);
+            color: #0d47a1;
+            padding: .35rem .7rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            font-weight: 900;
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero .cta {
+            background: #fff;
+            color: #0d47a1;
+            border: none;
+            padding: .75rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .hero .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero">
+        <!-- فيديو الخلفية -->
+        <video autoplay muted loop playsinline preload="auto" class="hero-video">
+            <source src="3.mp4" type="video/mp4">
+        </video>
+
+
+        <!-- Overlay -->
+        <div class="hero-overlay"></div>
+
+        <!-- النافبار -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container d-flex justify-content-between align-items-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#watches">ساعات</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#wallets">محافظ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#perfumes">برفانات</a></li>
+                </ul>
+      
+            </div>
+        </nav>
+
+        <!-- محتوى الهيرو -->
+        <div class="hero-content">
+            <span class="hero-badge">عروض اليوم 🔥</span>
+            <h1>اختياراتك من الساعات والمحافظ والبرفانات</h1>
+            <p>شحن سريع • استبدال مضمون • أسعار منافسة</p>
+            <a href="#watches" class="btn cta">تسوق الآن</a>
+        </div>
+    </header>
+
+    <!-- قسم الساعات -->
+    <section id="watches" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold mb-4 text-center">⌚ ساعات تريند</h2>
+
+            <!-- السطر الأول -->
+            <div class="swiper mySwiper mb-4">
+                <div class="swiper-wrapper">
+                    <!-- منتجات السطر الأول -->
+                    <!-- منتج 1 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561644945-5549aca7-c4f6-4acc-8aca-5e36a225348a.jpg"
+                                class="card-img-top" alt="ساعة 1">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 1</h5>
+                                <p class="text-muted mb-1"><del>750 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">499 EGP</p>
+                                <p class="small text-success">🟢 متوفر 3 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 2 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561696992-7b7a2cf1-853f-468e-9fe8-620464a61e74.jpg"
+                                class="card-img-top" alt="ساعة 2">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 2</h5>
+                                <p class="text-muted mb-1"><del>850 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">599 EGP</p>
+                                <p class="small text-success">🟢 متوفر 4 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 3 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561736955-124a1cdd-7698-4715-a90a-9ea98b5194b6.jpg"
+                                class="card-img-top" alt="ساعة 3">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 3</h5>
+                                <p class="text-muted mb-1"><del>800 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">579 EGP</p>
+                                <p class="small text-success">🟢 متوفر لونين</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 4 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561757013-8afbf2cf-7cd1-453f-adc0-6d1397ae0e88.jpg"
+                                class="card-img-top" alt="ساعة 4">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 4</h5>
+                                <p class="text-muted mb-1"><del>950 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">699 EGP</p>
+                                <p class="small text-success">🟢 متوفر 5 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 5 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561779278-77bc4f6a-88b0-4e7e-ad70-7eff30495642.jpg"
+                                class="card-img-top" alt="ساعة 5">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 5</h5>
+                                <p class="text-muted mb-1"><del>700 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">489 EGP</p>
+                                <p class="small text-success">🟢 متوفر 3 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 6 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561843641-5110616f-bd5a-41eb-b84c-d68beab90ddb.jpg"
+                                class="card-img-top" alt="ساعة 6">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 6</h5>
+                                <p class="text-muted mb-1"><del>880 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">629 EGP</p>
+                                <p class="small text-success">🟢 متوفر لون واحد</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 7 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561863787-05d826c7-5c33-4c5c-9165-326dda2a30af.jpg"
+                                class="card-img-top" alt="ساعة 7">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 7</h5>
+                                <p class="text-muted mb-1"><del>780 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">529 EGP</p>
+                                <p class="small text-success">🟢 متوفر 2 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 8 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755565733964-bf050d20-cb86-47fe-8459-7f86007d8826.jpg"
+                                class="card-img-top" alt="ساعة 8">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعه ROLEX</h5>
+                                <p class="text-muted mb-1"><del>750 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">450 EGP</p>
+                                <p class="small text-success">🟢 متوفر 6 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product2.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- السطر الثاني (يمشي بالعكس) -->
+            <div class="swiper mySwiper2">
+                <div class="swiper-wrapper">
+                    <!-- منتجات السطر الثاني -->
+                    <!-- منتج 1 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755561987739-29506b38-07e7-4f5d-bdcc-25f85d5e009a.jpg"
+                                class="card-img-top" alt="ساعة 1">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 1</h5>
+                                <p class="text-muted mb-1"><del>500 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">349 EGP</p>
+                                <p class="small text-success">🟢 متوفر 3 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 2 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755562009071-dfe246ca-64aa-4cf9-86d2-58518651bc0c.jpg"
+                                class="card-img-top" alt="ساعة 2">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 2</h5>
+                                <p class="text-muted mb-1"><del>600 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">429 EGP</p>
+                                <p class="small text-success">🟢 متوفر 4 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 3 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755562029422-6e95de7a-ea18-46c1-b1f3-beafd23ecea7.jpg"
+                                class="card-img-top" alt="ساعة 3">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 3</h5>
+                                <p class="text-muted mb-1"><del>550 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">399 EGP</p>
+                                <p class="small text-success">🟢 متوفر 2 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 4 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755562055095-03efaf2e-2ad9-421e-8d54-f976fbfbb21d.jpg"
+                                class="card-img-top" alt="ساعة 4">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 4</h5>
+                                <p class="text-muted mb-1"><del>700 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">499 EGP</p>
+                                <p class="small text-success">🟢 متوفر 5 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 5 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755562075621-53968d17-d3cf-4c6b-b45a-f5b8c3ac545c.jpg"
+                                class="card-img-top" alt="ساعة 5">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 5</h5>
+                                <p class="text-muted mb-1"><del>650 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">459 EGP</p>
+                                <p class="small text-success">🟢 متوفر 3 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 6 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755562093261-c021f448-5e2c-44c5-b769-48ac0e0529fe.jpg"
+                                class="card-img-top" alt="ساعة 6">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 6</h5>
+                                <p class="text-muted mb-1"><del>720 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">519 EGP</p>
+                                <p class="small text-success">🟢 متوفر 6 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 7 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755562124656-e7ff0ca2-c39e-4b29-b124-e74fa67e6833.jpg"
+                                class="card-img-top" alt="ساعة 7">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 7</h5>
+                                <p class="text-muted mb-1"><del>800 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">599 EGP</p>
+                                <p class="small text-success">🟢 متوفر 4 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- منتج 8 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755562146413-c27b3205-1469-4303-a346-2ea96c149cd3.jpg"
+                                class="card-img-top" alt="ساعة 8">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">ساعة يد 8</h5>
+                                <p class="text-muted mb-1"><del>990 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">749 EGP</p>
+                                <p class="small text-success">🟢 متوفر 6 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم المحافظ -->
+    <section id="wallets" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold mb-4 text-center">💼 محافظ فاخرة</h2>
+
+            <!-- السطر الأول -->
+            <div class="swiper mySwiperWallets mb-4">
+                <div class="swiper-wrapper">
+                    <!-- 8 محافظ -->
+                    <!-- محفظة 1 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,1" class="card-img-top" alt="محفظة 1">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 1</h5>
+                                <p class="text-muted mb-1"><del>450 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">299 EGP</p>
+                                <p class="small text-success">🟢 متوفر 2 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محفظة 2 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,2" class="card-img-top" alt="محفظة 2">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 2</h5>
+                                <p class="text-muted mb-1"><del>480 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">329 EGP</p>
+                                <p class="small text-success">🟢 متوفر 3 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محفظة 3 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,3" class="card-img-top" alt="محفظة 3">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 3</h5>
+                                <p class="text-muted mb-1"><del>420 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">279 EGP</p>
+                                <p class="small text-success">🟢 متوفر لون واحد</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محفظة 4 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,4" class="card-img-top" alt="محفظة 4">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 4</h5>
+                                <p class="text-muted mb-1"><del>500 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">349 EGP</p>
+                                <p class="small text-success">🟢 متوفر 2 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محفظة 5 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,5" class="card-img-top" alt="محفظة 5">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 5</h5>
+                                <p class="text-muted mb-1"><del>470 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">319 EGP</p>
+                                <p class="small text-success">🟢 متوفر 3 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محفظة 6 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,6" class="card-img-top" alt="محفظة 6">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 6</h5>
+                                <p class="text-muted mb-1"><del>490 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">339 EGP</p>
+                                <p class="small text-success">🟢 متوفر 2 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محفظة 7 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,7" class="card-img-top" alt="محفظة 7">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 7</h5>
+                                <p class="text-muted mb-1"><del>510 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">359 EGP</p>
+                                <p class="small text-success">🟢 متوفر 4 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- محفظة 8 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://source.unsplash.com/400x400/?wallet,8" class="card-img-top" alt="محفظة 8">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">محفظة 8</h5>
+                                <p class="text-muted mb-1"><del>530 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">379 EGP</p>
+                                <p class="small text-success">🟢 متوفر 3 ألوان</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم البرفانات -->
+    <section id="perfumes" class="py-5">
+        <div class="container">
+            <h2 class="fw-bold mb-4 text-center">🌸 برفانات مختارة</h2>
+
+            <div class="swiper mySwiperPerfumes">
+                <div class="swiper-wrapper">
+                    <!-- 8 برفانات -->
+                    <!-- برفان 1 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563834483-222de236-b36b-489a-8777-8a5cc0631d74.webp"
+                                class="card-img-top" alt="برفان 1">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 1</h5>
+                                <p class="text-muted mb-1"><del>600 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">399 EGP</p>
+                                <p class="small text-success">🟢 حجم 50 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- برفان 2 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563866107-9e352cf7-19ce-40e1-b65c-1485ec57561b.webp"
+                                class="card-img-top" alt="برفان 2">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 2</h5>
+                                <p class="text-muted mb-1"><del>650 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">449 EGP</p>
+                                <p class="small text-success">🟢 حجم 50 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- برفان 3 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563880294-7e0f1030-8862-4d1e-946d-e978ce3be3d4.jpg"
+                                class="card-img-top" alt="برفان 3">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 3</h5>
+                                <p class="text-muted mb-1"><del>700 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">499 EGP</p>
+                                <p class="small text-success">🟢 حجم 100 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- برفان 4 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563894701-b2a123fc-a8ea-4073-ac36-7a801abfba0d.webp"
+                                class="card-img-top" alt="برفان 4">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 4</h5>
+                                <p class="text-muted mb-1"><del>720 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">519 EGP</p>
+                                <p class="small text-success">🟢 حجم 50 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- برفان 5 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563909029-046c2537-0ac8-4baa-ae9c-2ac401dbf39d.jpg"
+                                class="card-img-top" alt="برفان 5">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 5</h5>
+                                <p class="text-muted mb-1"><del>740 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">539 EGP</p>
+                                <p class="small text-success">🟢 حجم 100 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- برفان 6 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563920174-eec6c07a-1808-4b50-871c-94991b1a6f72.webp"
+                                class="card-img-top" alt="برفان 6">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 6</h5>
+                                <p class="text-muted mb-1"><del>760 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">559 EGP</p>
+                                <p class="small text-success">🟢 حجم 50 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- برفان 7 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563930640-80666bc8-8b37-44ed-9e38-ae695219cde0.webp"
+                                class="card-img-top" alt="برفان 7">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 7</h5>
+                                <p class="text-muted mb-1"><del>780 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">579 EGP</p>
+                                <p class="small text-success">🟢 حجم 50 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- برفان 8 -->
+                    <div class="swiper-slide">
+                        <div class="card h-100 shadow-sm">
+                            <img src="https://image2url.com/images/1755563941491-8b516b5d-8fd1-4175-98f1-217a3fca7389.jpg"
+                                class="card-img-top" alt="برفان 8">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">برفان 8</h5>
+                                <p class="text-muted mb-1"><del>800 EGP</del></p>
+                                <p class="fw-bold text-dark fs-5">599 EGP</p>
+                                <p class="small text-success">🟢 حجم 100 مل</p>
+                                <p class="small text-primary">🚚 شحن مجاني</p>
+                                <a href="product.html" class="btn btn-dark btn-sm">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- الفوتر -->
+    <footer class="bg-dark text-white pt-4 pb-2 mt-5">
+        <div class="container text-center small">
+            <p>&copy; 2025 MMS. جميع الحقوق محفوظة.</p>
+            <p>
+                <a class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                <a class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                <a class="text-white me-2"><i class="fab fa-twitter"></i></a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- سكريبتات -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiperSettings = {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            loop: true,
+            loopedSlides: 8,
+            allowTouchMove: true,
+            autoplay: { delay: 0, disableOnInteraction: false },
+            speed: 4000,
+            breakpoints: {
+                0: { slidesPerView: 1 },
+                576: { slidesPerView: 2 },
+                992: { slidesPerView: 4 }
+            }
+        };
+
+        // الساعات: السطر الأول (شمال ➝ يمين)
+        var swiper1 = new Swiper(".mySwiper", swiperSettings);
+
+        // الساعات: السطر الثاني (يمين ➝ شمال)
+        var swiper2 = new Swiper(".mySwiper2", {
+            ...swiperSettings,
+            autoplay: { delay: 0, disableOnInteraction: false, reverseDirection: true }
+        });
+
+        // المحافظ: زي السطر الأول (شمال ➝ يمين)
+        var swiper3 = new Swiper(".mySwiperWallets", swiperSettings);
+
+        // البرفانات: زي السطر الثاني (يمين ➝ شمال)
+        var swiper4 = new Swiper(".mySwiperPerfumes", {
+            ...swiperSettings,
+            autoplay: { delay: 0, disableOnInteraction: false, reverseDirection: true }
+        });
+
+    </script>
+    <script>
+        const vid = document.querySelector('.hero-video');
+        vid.play().catch(() => {
+            console.log('الفيديو لم يبدأ تلقائياً، حاول التفاعل مع الصفحة.');
+        });
+    </script>
+
+</body>
+
+</html>
